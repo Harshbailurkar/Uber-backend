@@ -1,0 +1,41 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "This is backend of Uber Clone created by Harsh Bailurkar ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -r dotenv/config --experimental-json-modules index.js",
+    "start": "node -r dotenv/config index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harshbailurkar/Uber-backend.git"
+  },
+  "keywords": [
+    "backend",
+    "javascript",
+    "express"
+  ],
+  "author": "harsh bailurkar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Harshbailurkar/Uber-backend/issues"
+  },
+  "homepage": "https://github.com/Harshbailurkar/Uber-backend#readme",
+  "dependencies": {
+    "axios": "^1.7.9",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
