@@ -198,6 +198,144 @@
       - `captainRefreshToken`: Cleared.
   - **Error:** `500 Internal Server Error` if logout fails.
 
+### 7. Create Ride
+
+- **URL:** `/api/v1/rides/create`
+- **Method:** `POST`
+- **Description:** Creates a new ride.
+- **Headers:**
+  - `Authorization: Bearer <access_token>`
+- **Request Body:**
+  ```json
+  {
+    "pickup": "Pickup location",
+    "destination": "Destination location",
+    "vehicleType": "car"
+  }
+  ```
+- **Response:**
+  - **Success:** `201 Created`
+    ```json
+    {
+      "ride": {
+        "_id": "ride_id",
+        "user": "user_id",
+        "pickup": "Pickup location",
+        "destination": "Destination location",
+        "fare": 100,
+        "otp": "1234",
+        "status": "pending",
+        "createdAt": "timestamp",
+        "updatedAt": "timestamp"
+      }
+    }
+    ```
+  - **Error:** `400 Bad Request` if required fields are missing.
+  - **Error:** `500 Internal Server Error` if ride creation fails.
+
+### 8. Calculate Fare
+
+- **URL:** `/api/v1/rides/fare`
+- **Method:** `POST`
+- **Description:** Calculates the fare for a ride.
+- **Headers:**
+  - `Authorization: Bearer <access_token>`
+- **Request Body:**
+  ```json
+  {
+    "pickup": "Pickup location",
+    "destination": "Destination location"
+  }
+  ```
+- **Response:**
+  - **Success:** `200 OK`
+    ```json
+    {
+      "fare": {
+        "auto": 50,
+        "car": 100,
+        "bike": 30
+      }
+    }
+    ```
+  - **Error:** `400 Bad Request` if required fields are missing.
+  - **Error:** `500 Internal Server Error` if fare calculation fails.
+
+### 9. Get Coordinates
+
+- **URL:** `/api/v1/maps/get-cordinates`
+- **Method:** `GET`
+- **Description:** Gets the coordinates for a given address.
+- **Headers:**
+  - `Authorization: Bearer <access_token>`
+- **Query Parameters:**
+  - `address`: The address to get coordinates for.
+- **Response:**
+  - **Success:** `200 OK`
+    ```json
+    {
+      "lat": 40.7128,
+      "lng": -74.0060
+    }
+    ```
+  - **Error:** `400 Bad Request` if address is missing or invalid.
+  - **Error:** `500 Internal Server Error` if fetching coordinates fails.
+
+### 10. Get Distance and Time
+
+- **URL:** `/api/v1/maps/get-distance-time`
+- **Method:** `GET`
+- **Description:** Gets the distance and time between two locations.
+- **Headers:**
+  - `Authorization: Bearer <access_token>`
+- **Query Parameters:**
+  - `origin`: The origin location.
+  - `destination`: The destination location.
+- **Response:**
+  - **Success:** `200 OK`
+    ```json
+    {
+      "distance": {
+        "text": "10 km",
+        "value": 10000
+      },
+      "duration": {
+        "text": "15 mins",
+        "value": 900
+      }
+    }
+    ```
+  - **Error:** `400 Bad Request` if origin or destination is missing.
+  - **Error:** `500 Internal Server Error` if fetching distance and time fails.
+
+### 11. Get AutoComplete Suggestions
+
+- **URL:** `/api/v1/maps/get-suggestions`
+- **Method:** `GET`
+- **Description:** Gets autocomplete suggestions for a given address.
+- **Headers:**
+  - `Authorization: Bearer <access_token>`
+- **Query Parameters:**
+  - `address`: The address to get suggestions for.
+- **Response:**
+  - **Success:** `200 OK`
+    ```json
+    {
+      "predictions": [
+        {
+          "description": "New York, NY, USA",
+          "place_id": "ChIJOwg_06VPwokRYv534QaPC8g"
+        },
+        {
+          "description": "Newark, NJ, USA",
+          "place_id": "ChIJHQ6aMnBTwokRkF7gRz8T2kA"
+        }
+      ]
+    }
+    ```
+  - **Error:** `400 Bad Request` if address is missing or invalid.
+  - **Error:** `500 Internal Server Error` if fetching suggestions fails.
+
 ## Middleware
 
 ### verifyJWT
@@ -252,6 +390,26 @@
       "lng": "Number"
     },
     "refreshToken": "String"
+  }
+  ```
+
+### Ride
+
+- **Schema:**
+  ```json
+  {
+    "user": "ObjectId",
+    "captain": "ObjectId",
+    "pickup": "String",
+    "destination": "String",
+    "fare": "Number",
+    "status": "String",
+    "duration": "Number",
+    "distance": "Number",
+    "paymentID": "String",
+    "orderId": "String",
+    "signature": "String",
+    "otp": "String"
   }
   ```
 
