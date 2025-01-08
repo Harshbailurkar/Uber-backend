@@ -61,7 +61,6 @@ const createRideService = async ({
     otp,
     status: "pending",
   });
-  console.log(ride);
 
   return ride;
 };

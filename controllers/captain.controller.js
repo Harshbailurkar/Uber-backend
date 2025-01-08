@@ -135,8 +135,6 @@ const registerCaptain = asyncHandler(async (req, res, next) => {
 });
 
 const logoutCaptain = asyncHandler(async (req, res, next) => {
-  console.log("logout captain");
-
   const captain = await Captain.findByIdAndUpdate(
     req.captain._id,
     { $unset: { refreshToken: 1 } },

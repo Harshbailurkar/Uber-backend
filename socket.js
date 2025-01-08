@@ -14,12 +14,12 @@ export function initializeSocket(server) {
   });
 
   io.on("connection", (socket) => {
-    console.log(`New client connected: ${socket.id}`);
+    // console.log(`New client connected: ${socket.id}`);
 
     socket.on("join", async (data) => {
       const { userId, userType } = data;
 
-      console.log(`User ${userId} joined as ${userType}`);
+      // console.log(`User ${userId} joined as ${userType}`);
       if (userType == "user") {
         await User.findByIdAndUpdate(userId, { socketId: socket.id });
       } else {
@@ -33,7 +33,7 @@ export function initializeSocket(server) {
       if (!location || !location.ltd || !location.lng) {
         return socket.emit("error", "Invalid location");
       }
-      console.log(`User ${userId} updated location as ${location}`);
+      // console.log(`User ${userId} updated location as ${location}`);
       const updatedCaptain = await Captain.findByIdAndUpdate(userId, {
         location: {
           ltd: location.ltd,

@@ -59,7 +59,6 @@ const createRide = asyncHandler(async (req, res, next) => {
       data: rideWithUser,
     });
   });
-  console.log(captainsInRadius);
 });
 
 const calculateFare = asyncHandler(async (req, res, next) => {
@@ -102,7 +101,7 @@ const confirmRide = asyncHandler(async (req, res, next) => {
 
 const startRide = asyncHandler(async (req, res, next) => {
   const { rideId, otp } = req.body;
-  console.log(rideId, otp);
+
   if (!otp || otp.length !== 4) {
     return new APIError("OTP is required");
   }
@@ -132,8 +131,6 @@ const startRide = asyncHandler(async (req, res, next) => {
   )
     .populate("user")
     .populate("captain");
-
-  console.log("updated ride", updatedRide);
 
   sendMessageToSocketId(updatedRide.user.socketId, "ride-started", {
     data: updatedRide,

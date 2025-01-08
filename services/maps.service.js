@@ -2,6 +2,7 @@ import axios from "axios";
 import { APIError } from "../utils/APIError.js";
 import { APIResponse } from "../utils/APIResponse.js";
 import { Captain } from "../models/captain.model.js";
+
 const getAddressCoordinate = async (address) => {
   try {
     const response = await axios.get(
