@@ -1,6 +1,7 @@
 import axios from "axios";
-import { APIError } from "../utils/apiError.js";
-import { APIResponse } from "../utils/apiResponse.js";
+import { APIError } from "../utils/APIError.js";
+import { APIResponse } from "../utils/APIResponse.js";
+import { Captain } from "../models/captain.model.js";
 const getAddressCoordinate = async (address) => {
   try {
     const response = await axios.get(
@@ -70,8 +71,26 @@ const getAutoCompleteSuggestionsService = async (address) => {
     throw new Error("Failed to fetch suggestions");
   }
 };
+
+const getCaptainsInTheRadius = async (ltd, lng, radius) => {
+  if (!ltd || !lng) {
+    return new APIError("ldt,lng and radius are required");
+  }
+  //radius in km
+  const captains = await Captain.find({
+    location: {
+      $geoWithin: {
+        $centerSphere: [[ltd, lng], radius / 6371],
+      },
+    },
+  });
+
+  return captains;
+};
+
 export {
   getAddressCoordinate,
   getDistanceTimeService,
   getAutoCompleteSuggestionsService,
+  getCaptainsInTheRadius,
 };

@@ -336,6 +336,75 @@
   - **Error:** `400 Bad Request` if address is missing or invalid.
   - **Error:** `500 Internal Server Error` if fetching suggestions fails.
 
+### 12. Confirm Ride
+
+- **URL:** `/api/v1/rides/confirm`
+- **Method:** `POST`
+- **Description:** Confirms a ride.
+- **Headers:**
+  - `Authorization: Bearer <captainAccessToken>`
+- **Request Body:**
+  ```json
+  {
+    "rideId": "ride_id"
+  }
+  ```
+- **Response:**
+  - **Success:** `200 OK`
+    ```json
+    {
+      "message": "Ride confirmed successfully"
+    }
+    ```
+  - **Error:** `400 Bad Request` if required fields are missing.
+  - **Error:** `500 Internal Server Error` if ride confirmation fails.
+
+### 13. Start Ride
+
+- **URL:** `/api/v1/rides/start-ride`
+- **Method:** `POST`
+- **Description:** Starts a ride.
+- **Headers:**
+  - `Authorization: Bearer <captainAccessToken>`
+- **Request Body:**
+  ```json
+  {
+    "rideId": "ride_id"
+  }
+  ```
+- **Response:**
+  - **Success:** `200 OK`
+    ```json
+    {
+      "message": "Ride started successfully"
+    }
+    ```
+  - **Error:** `400 Bad Request` if required fields are missing.
+  - **Error:** `500 Internal Server Error` if ride start fails.
+
+### 14. End Ride
+
+- **URL:** `/api/v1/rides/end-ride`
+- **Method:** `POST`
+- **Description:** Ends a ride.
+- **Headers:**
+  - `Authorization: Bearer <captainAccessToken>`
+- **Request Body:**
+  ```json
+  {
+    "rideId": "ride_id"
+  }
+  ```
+- **Response:**
+  - **Success:** `200 OK`
+    ```json
+    {
+      "message": "Ride ended successfully"
+    }
+    ```
+  - **Error:** `400 Bad Request` if required fields are missing.
+  - **Error:** `500 Internal Server Error` if ride end fails.
+
 ## Middleware
 
 ### verifyJWT

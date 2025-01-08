@@ -1,6 +1,6 @@
-import { APIError } from "../utils/apiError.js";
+import { APIError } from "../utils/APIError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { APIResponse } from "../utils/apiResponse.js";
+import { APIResponse } from "../utils/APIResponse.js";
 import {
   getAddressCoordinate,
   getDistanceTimeService,

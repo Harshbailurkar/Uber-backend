@@ -1,5 +1,5 @@
 import { Ride } from "../models/ride.model.js";
-import { APIError } from "../utils/apiError.js";
+import { APIError } from "../utils/APIError.js";
 import { getDistanceTimeService } from "./maps.service.js";
 
 import crypto from "crypto";

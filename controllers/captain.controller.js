@@ -1,7 +1,7 @@
 import { Captain } from "../models/captain.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { APIError } from "../utils/apiError.js";
-import { APIResponse } from "../utils/apiResponse.js";
+import { APIError } from "../utils/APIError.js";
+import { APIResponse } from "../utils/APIResponse.js";
 import jwt from "jsonwebtoken";
 
 const generateAccessAndRefreshToken = async (captainId) => {
