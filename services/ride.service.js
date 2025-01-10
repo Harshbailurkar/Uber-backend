@@ -52,6 +52,7 @@ const createRideService = async ({
 
   const fare = await getFare(pickup, destination);
   const otp = await getOPT(4);
+  const distance = await getDistanceTimeService(pickup, destination);
 
   const ride = await Ride.create({
     user,
@@ -60,6 +61,7 @@ const createRideService = async ({
     fare: fare[vehicleType],
     otp,
     status: "pending",
+    distance: distance.distance.value,
   });
 
   return ride;

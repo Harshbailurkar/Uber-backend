@@ -1,4 +1,5 @@
 import { Captain } from "../models/captain.model.js";
+import { Ride } from "../models/ride.model.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { APIError } from "../utils/APIError.js";
 import { APIResponse } from "../utils/APIResponse.js";
@@ -171,4 +172,67 @@ const captainProfile = asyncHandler(async (req, res, next) => {
   return res.status(200).json(new APIResponse(200, captain, "captain profile"));
 });
 
-export { loginCaptain, registerCaptain, logoutCaptain, captainProfile };
+const captainMonthlyEarnings = asyncHandler(async (req, res, next) => {
+  if (!req.captain || !req.captain._id) {
+    throw new APIError(400, "Captain details are missing in the request");
+  }
+
+  const captainId = req.captain._id;
+
+  const currentDate = new Date();
+  const startOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    1
+  );
+  const endOfMonth = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth() + 1,
+    0
+  );
+
+  const rides = await Ride.aggregate([
+    {
+      $match: {
+        captain: captainId,
+        status: "completed",
+        createdAt: { $gte: startOfMonth, $lte: endOfMonth },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalEarnings: { $sum: "$fare" },
+        rides: { $push: "$$ROOT" },
+      },
+    },
+  ]);
+
+  let totalEarnings = rides.length > 0 ? rides[0].totalEarnings : 0;
+  let totalDistance =
+    rides.length > 0
+      ? rides[0].rides.reduce((acc, ride) => acc + ride.distance, 0)
+      : 0;
+  // convert distance to km
+  totalDistance = parseFloat((totalDistance / 1000).toFixed(2));
+  totalEarnings = Math.round(totalEarnings);
+  const totalMonthlyRides = rides.length > 0 ? rides[0].rides.length : 0;
+
+  return res
+    .status(200)
+    .json(
+      new APIResponse(
+        200,
+        { totalEarnings, totalMonthlyRides, totalDistance },
+        "Captain monthly earnings and completed rides"
+      )
+    );
+});
+
+export {
+  loginCaptain,
+  registerCaptain,
+  logoutCaptain,
+  captainProfile,
+  captainMonthlyEarnings,
+};
