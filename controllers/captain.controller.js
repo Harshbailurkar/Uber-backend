@@ -229,10 +229,18 @@ const captainMonthlyEarnings = asyncHandler(async (req, res, next) => {
     );
 });
 
+const docVerification = asyncHandler(async (req, res, next) => {
+  console.log(req.file);
+  // // const { url } = req.body;
+  // // console.log(url);
+  // console.log(req);
+});
+
 export {
   loginCaptain,
   registerCaptain,
   logoutCaptain,
   captainProfile,
   captainMonthlyEarnings,
+  docVerification,
 };
